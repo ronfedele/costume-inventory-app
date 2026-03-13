@@ -162,4 +162,4 @@ export async function uploadAssetImage(file, assetId) {
 
 export function value(obj, ...keys) {
   return pick(obj, ...keys)
-}}
+}
