@@ -1,15 +1,26 @@
+import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
-import { SectionLinks } from "@/components/SectionLinks";
+import { DataTable } from "@/components/DataTable";
+import { getPeople } from "@/lib/data/people";
+import { boolLabel } from "@/lib/data/utils";
 
-export default function Page() {
+export default async function PeoplePage() {
+  const people = await getPeople();
+
   return (
     <div>
-      <PageHeader title="Cast & Measurements" description="People records, structured measurements, fitting history, allergies, and sizing suggestions." />
-      <SectionLinks items={[
-        { href: "/measurements", label: "Measurements", note: "Measurement profile list" },
-        { href: "/people/sample-person", label: "Example Person Detail", note: "Placeholder person detail route" }
-      ]} />
-      
+      <PageHeader title="Cast & Measurements" description="People records currently stored in party_person." />
+      <DataTable
+        columns={["Name", "Email", "Phone", "Home site", "Allergies", "Active"]}
+        rows={people.map((row: any) => [
+          <Link key={row.person_id} href={`/people/${row.person_id}`}>{row.display_name}</Link>,
+          row.email ?? "—",
+          row.phone ?? "—",
+          row.home_site?.site_name ?? "—",
+          row.allergies_notes ?? "—",
+          boolLabel(row.active_flag),
+        ])}
+      />
     </div>
   );
 }

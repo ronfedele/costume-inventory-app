@@ -1,26 +1,33 @@
 import { PageHeader } from "@/components/PageHeader";
-import { SectionLinks } from "@/components/SectionLinks";
+import { DataTable } from "@/components/DataTable";
+import { Notice } from "@/components/Notice";
+import { getCostumes } from "@/lib/data/costumes";
+import { boolLabel } from "@/lib/data/utils";
 
-export default function Page() {
+export default async function CostumesPage() {
+  const rows = await getCostumes();
+
   return (
     <div>
-      <PageHeader title="Costume Shop" description="Costume-specific filters, color fields, size/era filters, alterations, and fitting workflows." />
-      <SectionLinks items={[
-        { href: "/costumes/fittings", label: "Fittings", note: "Run fitting sessions and record results" },
-        { href: "/costumes/ensembles", label: "Ensembles", note: "Group multiple garments into coordinated looks" }
-      ]} />
-      <div className="card" style={{ marginTop: 16 }}>
-        <h3>Suggested filters</h3>
-        <div className="badgeRow">
-          <span className="badge">Primary color</span>
-          <span className="badge">Secondary color</span>
-          <span className="badge">Accent color</span>
-          <span className="badge">Size label</span>
-          <span className="badge">Era / period</span>
-          <span className="badge">Garment type</span>
-          <span className="badge">Alteration status</span>
-        </div>
-      </div>
+      <PageHeader title="Costume Shop" description="Costume-specific records joined to asset, site, and location." />
+      <Notice>
+        Secondary color, accent color, alteration workflow, and fitting workflow are ideal next additions after you run the schema-extension package.
+      </Notice>
+      <DataTable
+        columns={["Code", "Title", "Category", "Garment", "Size", "Primary color", "Era", "Fabric", "Dry clean", "Condition"]}
+        rows={rows.map((row: any) => [
+          row.asset?.public_asset_code ?? "—",
+          row.asset?.title ?? "—",
+          row.costume_category ?? "—",
+          row.garment_type ?? "—",
+          row.size_label ?? "—",
+          row.color_primary ?? "—",
+          row.period_style ?? "—",
+          row.fabric ?? "—",
+          boolLabel(row.dry_clean_only_flag),
+          row.asset?.condition_status ?? "—",
+        ])}
+      />
     </div>
   );
 }

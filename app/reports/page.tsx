@@ -1,30 +1,34 @@
 import { PageHeader } from "@/components/PageHeader";
-import { SectionLinks } from "@/components/SectionLinks";
+import { DataTable } from "@/components/DataTable";
+import { getReportSnapshots } from "@/lib/data/reports";
 
-export default function Page() {
+export default async function ReportsPage() {
+  const data = await getReportSnapshots();
+
   return (
     <div>
-      <PageHeader title="Reports" description="CSV exports, PDFs, dashboards, and site summaries." />
-      <SectionLinks items={[
-        { href: "/reports/costume-pulls", label: "Costume Pulls", note: "Costume Pull List by Character" },
-        { href: "/reports/fittings", label: "Fittings", note: "Fitting Status by Production" },
-        { href: "/reports/loans", label: "Loans", note: "Borrowed Items Due This Week" },
-        { href: "/reports/inventory", label: "Inventory", note: "Inventory by Storage Location" }
-      ]} />
-      <div className="card" style={{ marginTop: 16 }}>
-        <h3>Priority reports</h3>
-        <ol className="list">
-          <li>Costume Pull List by Character</li>
-          <li>Quick Change Plot</li>
-          <li>Fitting Status by Production</li>
-          <li>Borrowed Items Due This Week</li>
-          <li>Assets Missing Photos</li>
-          <li>Repair Queue</li>
-          <li>Inventory by Storage Location</li>
-          <li>Cross-Site Borrowable Inventory</li>
-          <li>Prop Availability by Production</li>
-          <li>Barcode Audit Discrepancy Report</li>
-        </ol>
+      <PageHeader title="Reports" description="Live summary snapshots based on your current schema." />
+      <div className="gridWide">
+        <DataTable
+          columns={["Asset type", "Count"]}
+          rows={data.byType.map((row) => [row.asset_type, row.count])}
+        />
+        <DataTable
+          columns={["Borrowable code", "Title", "Type"]}
+          rows={data.borrowable.map((row: any) => [row.public_asset_code, row.title, row.asset_type])}
+        />
+      </div>
+      <div style={{ marginTop: 16 }}>
+        <DataTable
+          columns={["Missing photo code", "Title"]}
+          rows={data.missingPhotoRows.slice(0, 25).map((row: any) => [row.public_asset_code, row.title])}
+        />
+      </div>
+      <div style={{ marginTop: 16 }}>
+        <DataTable
+          columns={["Location", "Code", "Site"]}
+          rows={data.byLocation.map((row: any) => [row.location_name, row.location_code, row.site?.site_name ?? "—"])}
+        />
       </div>
     </div>
   );

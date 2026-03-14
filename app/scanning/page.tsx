@@ -1,15 +1,13 @@
 import { PageHeader } from "@/components/PageHeader";
-import { SectionLinks } from "@/components/SectionLinks";
+import { Notice } from "@/components/Notice";
 
-export default function Page() {
+export default function ScanningPage() {
   return (
     <div>
-      <PageHeader title="Labels & Scanning" description="Barcode sessions, scan exceptions, missing item reports, and label reprints." />
-      <SectionLinks items={[
-        { href: "/scanning/sessions", label: "Scan Sessions", note: "View current and prior scan sessions" },
-        { href: "/labels", label: "Labels", note: "Print and reprint barcode/QR labels" }
-      ]} />
-      
+      <PageHeader title="Scanning" description="Reserved for active scan-session workflows." />
+      <Notice>
+        Your current schema has `asset_tag`, but not `inventory_scan_session` or `inventory_scan_event` yet. Apply the schema-extension SQL first, then wire camera scanning here.
+      </Notice>
     </div>
   );
 }

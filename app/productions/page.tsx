@@ -1,17 +1,27 @@
+import Link from "next/link";
 import { PageHeader } from "@/components/PageHeader";
-import { SectionLinks } from "@/components/SectionLinks";
+import { DataTable } from "@/components/DataTable";
+import { getProductions } from "@/lib/data/productions";
+import { dateOnly } from "@/lib/data/utils";
 
-export default function Page() {
+export default async function ProductionsPage() {
+  const productions = await getProductions();
+
   return (
     <div>
-      <PageHeader title="Production Planner" description="Productions, assignments, pull lists, and readiness dashboards." />
-      <SectionLinks items={[
-        { href: "/productions/sample-production", label: "Production Detail", note: "View one production" },
-        { href: "/productions/sample-production/assignments", label: "Assignments", note: "Assets and ensembles by role or cast" },
-        { href: "/productions/sample-production/pull-lists", label: "Pull Lists", note: "Printable costume and prop pulls" },
-        { href: "/productions/sample-production/dashboards", label: "Dashboards", note: "Production readiness metrics" }
-      ]} />
-      
+      <PageHeader title="Production Planner" description="Live productions from the current schema." />
+      <DataTable
+        columns={["Production", "Type", "Site", "Season", "Open", "Close", "Status"]}
+        rows={productions.map((row: any) => [
+          <Link key={row.production_id} href={`/productions/${row.production_id}`}>{row.production_name}</Link>,
+          row.production_type,
+          row.site?.site_name ?? "—",
+          row.season_name ?? "—",
+          dateOnly(row.opening_date),
+          dateOnly(row.closing_date),
+          row.status,
+        ])}
+      />
     </div>
   );
 }

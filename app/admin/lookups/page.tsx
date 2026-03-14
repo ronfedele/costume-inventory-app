@@ -1,10 +1,17 @@
 import { PageHeader } from "@/components/PageHeader";
+import { DataTable } from "@/components/DataTable";
+import { getLookups } from "@/lib/data/lookups";
+import { boolLabel } from "@/lib/data/utils";
 
-export default function Page() {
+export default async function AdminLookupsPage() {
+  const rows = await getLookups();
   return (
     <div>
-      <PageHeader title="Admin Setup: Lookups" description="Maintain dropdown values and controlled vocabularies." />
-      <div className="card"><p>TODO_ROLE_GUARD: Restrict this page to admins.</p></div>
+      <PageHeader title="Lookup Values" description="Dropdown values coming from lookup_value." />
+      <DataTable
+        columns={["Group", "Code", "Label", "Module", "Sort", "Active"]}
+        rows={rows.map((row: any) => [row.lookup_group, row.value_code, row.value_label, row.module_scope, row.sort_order, boolLabel(row.active_flag)])}
+      />
     </div>
   );
 }

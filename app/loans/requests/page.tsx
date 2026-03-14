@@ -1,16 +1,17 @@
 import { PageHeader } from "@/components/PageHeader";
-import { SectionLinks } from "@/components/SectionLinks";
+import { DataTable } from "@/components/DataTable";
+import { getLoanRequests } from "@/lib/data/loans";
+import { dateOnly } from "@/lib/data/utils";
 
-export default function Page() {
+export default async function LoanRequestsPage() {
+  const rows = await getLoanRequests();
   return (
     <div>
-      <PageHeader title="Loan Requests" description="Request workflow, approvals, and inter-site borrowing intake." />
-      <SectionLinks items={[
-        { href: "/loans/agreements", label: "Agreements", note: "Printable and signed loan agreements" },
-        { href: "/loans/checkouts", label: "Checkouts", note: "Lender and borrower checkout process" },
-        { href: "/loans/returns", label: "Returns", note: "Returns, damage, and fee entry" }
-      ]} />
-      
+      <PageHeader title="Loan Requests" description="Current request workflow records from loan_request." />
+      <DataTable
+        columns={["Request #", "Status", "Need by", "Requesting site", "Fulfilling site", "Production", "Context"]}
+        rows={rows.map((row: any) => [row.request_number, row.request_status, dateOnly(row.need_by_date), row.requesting_site?.site_name ?? "—", row.fulfilling_site?.site_name ?? "—", row.production?.production_name ?? "—", row.event_context ?? "—"])}
+      />
     </div>
   );
 }
