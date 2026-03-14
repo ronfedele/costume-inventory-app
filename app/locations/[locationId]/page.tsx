@@ -1,9 +1,10 @@
 import { PageHeader } from "@/components/PageHeader";
 
-export default function LocationDetailPage({ params }: { params: { locationId: string } }) {
+export default async function LocationDetailPage({ params }: { params: Promise<{ locationId: string }> }) {
+  const { locationId } = await params;
   return (
     <div>
-      <PageHeader title={`Location ${params.locationId}`} description="Placeholder for one location tree node." />
+      <PageHeader title={`Location ${locationId}`} description="Placeholder for one location tree node." />
       <div className="grid">
         <div className="card">
           <h3>Location tree</h3>
