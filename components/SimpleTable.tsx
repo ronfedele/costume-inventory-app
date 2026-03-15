@@ -13,7 +13,14 @@ export function SimpleTable({
         <thead>
           <tr>
             {headers.map((h) => (
-              <th key={h} style={{ borderBottom: "1px solid #ccc", textAlign: "left", padding: 8 }}>
+              <th
+                key={h}
+                style={{
+                  borderBottom: "1px solid #ccc",
+                  textAlign: "left",
+                  padding: 8,
+                }}
+              >
                 {h}
               </th>
             ))}
@@ -23,7 +30,13 @@ export function SimpleTable({
           {rows.map((row, i) => (
             <tr key={i}>
               {row.map((cell, j) => (
-                <td key={j} style={{ borderBottom: "1px solid #eee", padding: 8 }}>
+                <td
+                  key={j}
+                  style={{
+                    borderBottom: "1px solid #eee",
+                    padding: 8,
+                  }}
+                >
                   {cell}
                 </td>
               ))}
