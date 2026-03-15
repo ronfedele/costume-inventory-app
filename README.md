@@ -1,3 +1,6 @@
+trigger rebuild
+
+
 # Theatre Inventory System
 
 This is a clean Next.js / Vercel-ready starter repo for your theatre database project.
