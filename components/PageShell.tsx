@@ -1,5 +1,30 @@
 import { ReactNode } from "react";
-import { Nav } from "@/components/Nav";
+import Link from "next/link";
+
+function Nav() {
+  const links = [
+    ["/dashboard", "Dashboard"],
+    ["/assets", "Assets"],
+    ["/costumes", "Costumes"],
+    ["/props", "Props"],
+    ["/locations", "Locations"],
+    ["/productions", "Productions"],
+    ["/people", "People"],
+    ["/loans/requests", "Loans"],
+    ["/reports", "Reports"],
+    ["/admin/lookups", "Admin"],
+  ];
+
+  return (
+    <nav style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 24 }}>
+      {links.map(([href, label]) => (
+        <Link key={href} href={href} style={{ textDecoration: "none" }}>
+          {label}
+        </Link>
+      ))}
+    </nav>
+  );
+}
 
 export function PageShell({
   title,
