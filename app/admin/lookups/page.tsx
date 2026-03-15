@@ -1,6 +1,6 @@
-import { PageShell } from "@/components/PageShell";
-import { getLookupValues } from "@/lib/data/lookups";
-import { SimpleTable } from "@/components/SimpleTable";
+import { PageShell } from "../../../components/PageShell";
+import { getLookupValues } from "../../../lib/data/lookups";
+import { SimpleTable } from "../../../components/SimpleTable";
 
 export default async function AdminLookupsPage() {
   const values = await getLookupValues();
