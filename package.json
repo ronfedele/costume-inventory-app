@@ -1,6 +1,9 @@
 {
   "name": "theatre-inventory-system",
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,7 +12,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.4",
-    "next": "15.5.9"
+    "next": "15.5.9",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   }
