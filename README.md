@@ -1,29 +1,35 @@
-# Theatre Database Frontend
+# Theatre Inventory System
 
-A clean Vercel-ready Next.js App Router project wired to your Supabase theatre database schema.
+This is a clean Next.js / Vercel-ready starter repo for your theatre database project.
 
-## Required environment variables
+## Included workspaces
+- Dashboard
+- Asset Library
+- Costume Shop
+- Props & Set Pieces
+- Storage Map
+- Production Planner
+- Cast & Measurements
+- Loans & Borrowing
+- Labels & Scanning
+- Reports
+- Admin Setup
 
-Create `.env.local` locally or add these in Vercel Project Settings > Environment Variables:
+## Supabase setup
+Add these Vercel environment variables:
+- NEXT_PUBLIC_SUPABASE_URL
+- NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-- `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+## First pages to test
+- /
+- /dashboard
+- /assets
+- /costumes
+- /productions
+- /people
+- /loans/requests
+- /reports
 
-## Local development
-
-```bash
-npm install
-npm run dev
-```
-
-## Deploy to Vercel
-
-1. Upload this repository to GitHub.
-2. Import the repo into Vercel.
-3. Add the two Supabase environment variables.
-4. Redeploy.
-
-## Important
-
-This repo intentionally does **not** include any Vite files such as `index.html`, `vite.config.js`, or `src/main.jsx`.
-It is a pure Next.js repo.
+## Notes
+Some pages are live-read pages against your current schema.
+Other pages are starter shells for the schema extensions you asked for next, such as fittings and scan sessions.
